@@ -1,12 +1,19 @@
 import styles from "./Navbar.module.css";
-import { Navigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useAuthValue } from "../context/AuthContext";
 import { useAuthentication } from "../hooks/useAuthentication";
 
 const Navbar = () => {
-  const { user } = useAuthValue();
+  const { user, setUser } = useAuthValue();
 
   const { logout } = useAuthentication();
+  const navigate = useNavigate();
+
+  const logUserOut = async () => {
+    await logout();
+    setUser(null);
+    navigate("/login", { replace: true });
+  };
 
   return (
     <nav className={styles.navbar}>
@@ -73,7 +80,7 @@ const Navbar = () => {
 
         {user && (
           <li>
-            <button onClick={logout}>Sair</button>
+            <button onClick={logUserOut}>Sair</button>
           </li>
         )}
       </ul>

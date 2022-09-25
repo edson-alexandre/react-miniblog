@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      <AuthProvider value={{ user }}>
+      <AuthProvider value={{ user, setUser }}>
         <BrowserRouter>
           <Navbar />
           <div className="container">
@@ -56,6 +56,7 @@ function App() {
                 path="/posts/create"
                 element={isNotAuthenticated(<CreatePost />)}
               />
+              <Route path="*" element={<Navigate to="home" />} />
             </Routes>
           </div>
           <Footer />
